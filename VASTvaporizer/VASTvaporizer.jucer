@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="wPTx8T" name="VASTvaporizer2" projectType="audioplug" version="3.3.0"
               bundleIdentifier="com.vastdynamics.VAST2" includeBinaryInAppConfig="1"
-              buildVST="0" buildVST3="1" buildAU="0" buildRTAS="0" buildAAX="0"
+              buildVST="1" buildVST3="1" buildAU="1" buildRTAS="0" buildAAX="1"
               pluginName="Vaporizer2" pluginDesc="VAST Dynamics Vaporizer2 Hybrid Synthesizer Plug-in"
               pluginManufacturer="VAST Dynamics" pluginManufacturerCode="Vast"
               pluginCode="Vap2" pluginIsSynth="1" pluginWantsMidiIn="1" pluginProducesMidiOut="0"
@@ -11,9 +11,10 @@
               companyName="VAST Dynamics" companyWebsite="www.vast-dynamics.com"
               companyEmail="contact@vast-dynamics.com" pluginIsMidiEffectPlugin="0"
               buildAUv3="0" displaySplashScreen="0" reportAppUsage="0" splashScreenColour="Dark"
-              buildStandalone="0" enableIAA="0" cppLanguageStandard="latest"
+              buildStandalone="1" enableIAA="0" cppLanguageStandard="latest"
               companyCopyright="VAST Dynamics" headerPath="..\..\Source\Engine; ..\..\Source\Plugin; ..\..\Source; ..\..\Source\muFFT"
-              pluginFormats="buildVST3" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
+              pluginFormats="buildVST,buildVST3,buildAU,buildAAX,buildStandalone"
+              pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
               pluginAUMainType="'aumu'" pluginChannelConfigs="{2,2}" maxBinaryFileSize="20971520"
               jucerFormatVersion="1">
   <MAINGROUP id="xqLnpn" name="VASTvaporizer2">
@@ -719,11 +720,11 @@
         <MODULEPATH id="juce_audio_basics"/>
       </MODULEPATHS>
     </VS2019>
-    <LINUX_MAKE targetFolder="Builds/LinuxMakefile" extraDefs="JUCE_VST3_CAN_REPLACE_VST2=0">
+    <LINUX_MAKE targetFolder="Builds/LinuxMakefile" extraDefs="JUCE_VST3_CAN_REPLACE_VST2=0 JucePlugin_Build_VST3=1 JucePlugin_Build_VST=0 JucePlugin_Build_AU=0 JucePlugin_Build_AAX=0"
+                externalLibraries="atomic">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="VASTvaporizer2" binaryPath="build"
-                       extraLinkerFlags="-latomic"/>
-        <CONFIGURATION isDebug="0" name="Release" extraLinkerFlags="-latomic"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="VASTvaporizer2" binaryPath="build"/>
+        <CONFIGURATION isDebug="0" name="Release"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="../../juce"/>
