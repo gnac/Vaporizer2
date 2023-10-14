@@ -721,8 +721,9 @@
     </VS2019>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" extraDefs="JUCE_VST3_CAN_REPLACE_VST2=0">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="VASTvaporizer2" binaryPath="build"/>
-        <CONFIGURATION isDebug="0" name="Release"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="VASTvaporizer2" binaryPath="build"
+                       extraLinkerFlags="-latomic"/>
+        <CONFIGURATION isDebug="0" name="Release" extraLinkerFlags="-latomic"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="../../juce"/>
