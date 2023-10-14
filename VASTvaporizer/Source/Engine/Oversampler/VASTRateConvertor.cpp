@@ -3,6 +3,8 @@ VAST Dynamics Audio Software (TM)
 */
 
 #include "VASTRateConvertor.h"
+#include <string.h> // for memset
+
 #ifdef DEBUG
 	#define _CRTDBG_MAP_ALLOC
 #endif

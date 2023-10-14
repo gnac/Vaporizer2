@@ -3323,7 +3323,7 @@ String VASTAudioProcessor::getVersionString() {
 		case AudioProcessor::wrapperType_VST3:          pluginType = "VST3"; break;
 		case AudioProcessor::wrapperType_AudioUnit:     pluginType = "AU"; break;
 		case AudioProcessor::wrapperType_AudioUnitv3:   pluginType = "AUv3"; break;
-		case AudioProcessor::wrapperType_RTAS:          pluginType = "RTAS"; break;
+		// case AudioProcessor::wrapperType_RTAS:          pluginType = "RTAS"; break;
 		case AudioProcessor::wrapperType_AAX:           pluginType = "AAX"; break;
 		case AudioProcessor::wrapperType_Standalone:    pluginType = "Standalone"; break;
 		default: pluginType = "undefined"; break;

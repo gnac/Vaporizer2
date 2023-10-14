@@ -20,7 +20,7 @@ VAST Dynamics Audio Software (TM)
 CDecimator::CDecimator(void)
 {
 	//FACTOR4
-#ifdef _MACOSX
+#if defined(_MACOSX) ||  defined(__linux__)
 	m_pIRBuffer = new float[C_FACTOR4_IR_LENGTH];
 #else
 	m_pIRBuffer = (float*)_aligned_malloc(C_FACTOR4_IR_LENGTH*sizeof(float), 16);
@@ -28,7 +28,7 @@ CDecimator::CDecimator(void)
 	// flush buffer
 	memset(m_pIRBuffer, 0, C_FACTOR4_IR_LENGTH*sizeof(float));
 
-#ifdef _MACOSX
+#if defined(_MACOSX) ||  defined(__linux__)
 	m_pLeftInputBuffer = new float[C_FACTOR4_IR_LENGTH * 2];
 	m_pRightInputBuffer = new float[C_FACTOR4_IR_LENGTH * 2];
 #else
@@ -56,7 +56,7 @@ CDecimator::CDecimator(void)
 CDecimator::~CDecimator(void)
 {
 	// free up our input buffers
-#ifdef _MACOSX
+#if defined(_MACOSX) ||  defined(__linux__)
 	if (m_pLeftInputBuffer) delete[] m_pLeftInputBuffer;
 	if (m_pRightInputBuffer) delete[] m_pRightInputBuffer;
 	if (m_pIRBuffer) delete[] m_pIRBuffer;

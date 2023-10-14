@@ -97,12 +97,12 @@ enum fb_configuration
 
 const float c_driftfilter = 0.00001f;
 const float c_driftm = 1.f / sqrt(c_driftfilter);
-const float c_randdriftfilter_slow = 0.000001f;									 
+const float c_randdriftfilter_slow = 0.000001f;
 const float c_randdriftm_slow = 1.f / sqrt(c_randdriftfilter_slow);
 const float c_randdriftfilter_fast = 0.001f;
 const float c_randdriftm_fast = 1.f / sqrt(c_randdriftfilter_fast);
 
-const int n_cm_coeffs = 8; 
+const int n_cm_coeffs = 8;
 const int n_filter_registers = 5;
 const int BLOCK_SIZE = 32;
 const int MAX_FILTER_OVERSAMPLING = 4;
@@ -207,7 +207,7 @@ inline float saturate(float f)
 
 inline __m128 softclip_ss(__m128 in)
 {
-	// y = x - (4/27)*x^3,  x € [-1.5 .. 1.5]
+	// y = x - (4/27)*x^3,  x ??? [-1.5 .. 1.5]
 	const __m128 a = _mm_set_ss(-4.f / 27.f);
 
 	const __m128 x_min = _mm_set_ss(-1.5f);
@@ -234,7 +234,7 @@ inline void snap_to_zero_ps(__m128 &x)
 
 inline __m128 softclip_ps(__m128 in)
 {
-	// y = x - (4/27)*x^3,  x € [-1.5 .. 1.5]
+	// y = x - (4/27)*x^3,  x ??? [-1.5 .. 1.5]
 	const __m128 a = _mm_set1_ps(-4.f / 27.f);
 
 	const __m128 x_min = _mm_set1_ps(-1.5f);
@@ -542,7 +542,7 @@ inline String floatToHexStr(float value) { //slow!!!
 static char hextab[] = { '0', '1', '2', '3', '4', '5', '6', '7',
 '8', '9' ,'a', 'b', 'c', 'd', 'e', 'f' };
 
-//The function that performs the conversion. Accepts a buffer with "enough space" 
+//The function that performs the conversion. Accepts a buffer with "enough space"
 //and populates it with a string of hexadecimal digits. Returns the length in digits
 inline String uintToHexStr(unsigned int num)
 {
@@ -573,13 +573,13 @@ inline String uintToHexStr(unsigned int num)
 
 inline double cubicBezierApproximation(double x, double curvy) { //x and curvy 0..1
 	//control points 2 and 3 are the same and p2x = 1- p2y
-	//https://math.stackexchange.com/questions/26846/is-there-an-explicit-form-for-cubic-b%C3%A9zier-curves	
+	//https://math.stackexchange.com/questions/26846/is-there-an-explicit-form-for-cubic-b%C3%A9zier-curves
 	// scale axis
 	jassert((curvy >= 0.f) && (curvy <= 1.f));
 	jassert((x >= 0.f) && (x <= 1.f));
 	if (x < 0.f) x = 0.f;
 	if (x > 1.f) x = 1.f;
-	if (approximatelyEqual(curvy, 0.5))	
+	if (approximatelyEqual(curvy, 0.5))
 		return x; //perfopt
 	else if (curvy <= 0.000001)
 		return 0.0 ; //CHECK
@@ -990,7 +990,7 @@ inline double calcInverseValueVoltOctaveExp(double dLowLimit, double dHighLimit,
 
 inline double log2(double n)
 {
-	// log(n)/log(2) is log2.  
+	// log(n)/log(2) is log2.
 	return log(n) / log((double)2);
 }
 
@@ -1043,7 +1043,7 @@ dModValue = moudulator: on the range of 0 -> 1
 inline double calcModulatedValueLin(double dLowLimit, double dHighLimit, double dControlValue, double dModValue)
 {
 	// convert mod value to bipolar
-	double dModulator = unipolarToBipolar(dModValue)*(dHighLimit - dLowLimit) / 2.0;// + dLowLimit; 
+	double dModulator = unipolarToBipolar(dModValue)*(dHighLimit - dLowLimit) / 2.0;// + dLowLimit;
 
 	double dModulatedValue = dControlValue + dModulator;
 
@@ -1059,7 +1059,7 @@ inline double doWhiteNoise()
 {
 	float fNoise = 0.0;
 
-#if defined _WINDOWS || defined _WINDLL    
+#if defined _WINDOWS || defined _WINDLL || defined __linux__
 	// fNoise is 0 -> 32767.0
 	fNoise = (float)rand();
 
@@ -1155,7 +1155,7 @@ inline void calculateVectorMixValues(double dOriginX, double dOriginY,
 	double x = dPointX;
 	double y = dPointY;
 
-	double dUnitScalar = 1.41421356*nCellsPerSide; // ncells*sqrt(2)	
+	double dUnitScalar = 1.41421356*nCellsPerSide; // ncells*sqrt(2)
 
 	if (!bJoystickCoords)
 	{
@@ -1187,12 +1187,12 @@ inline void calculateVectorMixValues(double dOriginX, double dOriginY,
 	dPointX *= 127;
 	dPointY *= 127;
 
-	if (dPointX > 127)   
+	if (dPointX > 127)
 		dPointX = 127;
 	else if (dPointX < -128)
 		dPointX = -128;
 
-	if (dPointY > 127)   
+	if (dPointY > 127)
 		dPointY = 127;
 	else if (dPointY < -128)
 		dPointY = -128;
@@ -1210,8 +1210,8 @@ inline void calculateVectorMixValues(double dOriginX, double dOriginY,
 	}
 
 	// the Korg/Sequential Circuits VS Equations
-	dBmag = dPointX*dPointY / 645;   
-	dCmag = dPointX*(255 - dPointY) / 645; 
+	dBmag = dPointX*dPointY / 645;
+	dCmag = dPointX*(255 - dPointY) / 645;
 	dDmag = (255 - dPointX)*(255 - dPointY) / 645;
 	dAmag = 100.0 - dBmag - dCmag - dDmag;
 
@@ -1244,12 +1244,12 @@ inline void calculateVectorJoystickValues(double dPointX, double dPointY,
 	dPointX = 127.0*unipolarToBipolar(dPointX);
 	dPointY = 127.0*unipolarToBipolar(dPointY);
 
-	if (dPointX > 127)   
+	if (dPointX > 127)
 		dPointX = 127;
 	else if (dPointX < -128)
 		dPointX = -128;
 
-	if (dPointY > 127)   
+	if (dPointY > 127)
 		dPointY = 127;
 	else if (dPointY < -128)
 		dPointY = -128;
@@ -1267,8 +1267,8 @@ inline void calculateVectorJoystickValues(double dPointX, double dPointY,
 	}
 
 	// the Korg/Sequential Circuits VS Equations
-	dBmag = dPointX*dPointY / 645;   
-	dCmag = dPointX*(255 - dPointY) / 645; 
+	dBmag = dPointX*dPointY / 645;
+	dCmag = dPointX*(255 - dPointY) / 645;
 	dDmag = (255 - dPointX)*(255 - dPointY) / 645;
 	dAmag = 100.0 - dBmag - dCmag - dDmag;
 
@@ -1296,7 +1296,7 @@ inline int translateRotorPointToGridCell(double& dOriginX, double& dOriginY,
 	int nCellsPerSide,
 	bool bJoystickCoords = true)
 {
-	double dUnitScalar = 1.41421356*nCellsPerSide; // ncells*sqrt(2)	
+	double dUnitScalar = 1.41421356*nCellsPerSide; // ncells*sqrt(2)
 
 	dRotorX *= dUnitScalar;
 	dRotorY *= dUnitScalar;
@@ -1381,7 +1381,7 @@ inline double doPolyBLEP_2(double dModulo, double dInc, double dHeight, bool bRi
 		dPolyBLEP = dHeight*(t*t + 2.0*t + 1.0);
 	}
 	// --- RIGHT side of discontinuity
-	//     0 <= t < 1 
+	//     0 <= t < 1
 	else if (dModulo < dInc)
 	{
 		// --- calculate distance
@@ -1447,7 +1447,7 @@ inline double doBLEP_N(const double* pBLEPTable, double dTableLen, double dModul
 	}
 
 	// RIGHT side of discontinuity
-	// 0 <= t < 1 
+	// 0 <= t < 1
 	for (int i = 1; i <= (MYUINT)dPointsPerSide; i++)
 	{
 		if (dModulo < (double)i*dInc)
@@ -1532,7 +1532,7 @@ inline double doBLEP_N_Now(const double* pBLEPTable, double dTableLen, double dM
 	}
 
 	// RIGHT side of discontinuity
-	// 0 <= t < 1 
+	// 0 <= t < 1
 	if (syncPoint > (MYUINT)dPointsPerSide) {
 		//	if (dModulo < (double)i*dInc)
 		//	{

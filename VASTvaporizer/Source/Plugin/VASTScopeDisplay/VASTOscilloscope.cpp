@@ -1684,7 +1684,12 @@ void VASTOscilloscope::singleCycleFromMSEG(int msegNo) {
 	float lastval = 0.f;
 
 	float* envptr;
+#ifdef __linux__
+	envptr = new float[256 * C_WAVE_TABLE_SIZE];		
+#else
 	envptr = new float[ceil(skips) * C_WAVE_TABLE_SIZE];	
+#endif
+
 	envelope.getEnvelopeRange(envptr, 0, ceil(skips) * C_WAVE_TABLE_SIZE, true); //no sustain
 	for (int i = 0; i < C_WAVE_TABLE_SIZE; i++) {
 		float frac = skips * i;

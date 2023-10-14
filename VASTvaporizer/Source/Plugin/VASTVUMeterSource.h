@@ -115,7 +115,7 @@ public:
 	\FIXME: don't call this when measureBlock is processing
 	*/
 	void resize(const int channels, const int rmsWindow) {
-		levels.resize(channels, ChannelData(rmsWindow));
+		// levels.resize(channels, ChannelData(rmsWindow));
 		for (ChannelData& l : levels) {
 			l.setRMSsize(rmsWindow);
 		}

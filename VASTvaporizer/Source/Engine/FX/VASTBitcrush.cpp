@@ -10,6 +10,7 @@ All modulators tested: OK
 #include "../../Plugin/VASTAudioProcessor.h"
 #include "VASTEffect.h"
 #include <ctime>
+// #include <cmath>
 
 CVASTBitcrush::CVASTBitcrush(VASTAudioProcessor* processor, int busnr) {
 	my_processor = processor;
@@ -209,8 +210,9 @@ void CVASTBitcrush::processBlock(AudioSampleBuffer& buffer, MidiBuffer& midiMess
 			m_leftFirstSample = fOut[0];
 			m_rightFirstSample = fOut[1];
 			m_repeatLength = (100.f - lBitcrushBitrate) * (m_iSampleRate / 44100.f);
-			if (lfBitcrushJitter > 0)
-				m_repeatLength += (m_rand.nextInt64() % int(std::ceilf((lfBitcrushJitter + 1.f) * (float(m_iSampleRate) / 44100.f))));
+			if (lfBitcrushJitter > 0) {
+				m_repeatLength += (m_rand.nextInt64() % int(::ceilf((lfBitcrushJitter + 1.f) * (float(m_iSampleRate) / 44100.f))));
+            }
 		}
 
 		//different approach
